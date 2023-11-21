@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "wVEpJXIn2UJCJScGTmkZnvhnuEwiJ1zsrBLZmtDVQV4=",
+  "Source": "BoatRental.api",
+  "BasePath": "_content/BoatRental.api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

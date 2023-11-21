@@ -1,0 +1,12 @@
+D:\.Net Projects\BoatRental.api\BoatRental.core\bin\Debug\net7.0\BoatRental.core.deps.json
+D:\.Net Projects\BoatRental.api\BoatRental.core\bin\Debug\net7.0\BoatRental.core.dll
+D:\.Net Projects\BoatRental.api\BoatRental.core\bin\Debug\net7.0\BoatRental.core.pdb
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.AssemblyInfoInputs.cache
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.AssemblyInfo.cs
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.csproj.CoreCompileInputs.cache
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.dll
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\refint\BoatRental.core.dll
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.pdb
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\ref\BoatRental.core.dll
+D:\.Net Projects\BoatRental.api\BoatRental.core\obj\Debug\net7.0\BoatRental.core.csproj.AssemblyReference.cache
