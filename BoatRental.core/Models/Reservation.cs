@@ -13,6 +13,7 @@ namespace BoatRental.core.Models
         public DateTime Date { get; set; }
         public List<Vehicle> Vehicles { get; set; }
         [ForeignKey(nameof(User))]
+        public int UserId { get; set; }
         public User user { get; set; }
     }
 }

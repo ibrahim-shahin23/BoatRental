@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoatRental.ef.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231121213314_ibrahim")]
-    partial class ibrahim
+    [Migration("20231122122537_db")]
+    partial class db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,7 +62,7 @@ namespace BoatRental.ef.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OwnerId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -109,12 +109,12 @@ namespace BoatRental.ef.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("User")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("User");
+                    b.HasIndex("UserId");
 
                     b.ToTable("reservations");
                 });
@@ -202,9 +202,8 @@ namespace BoatRental.ef.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("age")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -292,9 +291,13 @@ namespace BoatRental.ef.Migrations
 
             modelBuilder.Entity("BoatRental.core.Models.Offer", b =>
                 {
-                    b.HasOne("BoatRental.core.Models.Owner", null)
+                    b.HasOne("BoatRental.core.Models.Owner", "owner")
                         .WithMany("Offers")
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("owner");
                 });
 
             modelBuilder.Entity("BoatRental.core.Models.Package", b =>
@@ -307,8 +310,8 @@ namespace BoatRental.ef.Migrations
             modelBuilder.Entity("BoatRental.core.Models.Reservation", b =>
                 {
                     b.HasOne("BoatRental.core.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("User")
+                        .WithMany("reservations")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -412,6 +415,11 @@ namespace BoatRental.ef.Migrations
                     b.Navigation("VehicleServices");
 
                     b.Navigation("servicePackages");
+                });
+
+            modelBuilder.Entity("BoatRental.core.Models.User", b =>
+                {
+                    b.Navigation("reservations");
                 });
 
             modelBuilder.Entity("BoatRental.core.Models.Vehicle", b =>

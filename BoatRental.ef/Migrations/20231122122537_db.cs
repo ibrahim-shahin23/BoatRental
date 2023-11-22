@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BoatRental.ef.Migrations
 {
     /// <inheritdoc />
-    public partial class ibrahim : Migration
+    public partial class db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,7 @@ namespace BoatRental.ef.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    age = table.Column<int>(type: "int", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -63,7 +63,7 @@ namespace BoatRental.ef.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OwnerId = table.Column<int>(type: "int", nullable: true)
+                    OwnerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,7 +72,8 @@ namespace BoatRental.ef.Migrations
                         name: "FK_offers_users_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,14 +83,14 @@ namespace BoatRental.ef.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    User = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_reservations_users_User",
-                        column: x => x.User,
+                        name: "FK_reservations_users_UserId",
+                        column: x => x.UserId,
                         principalTable: "users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -234,9 +235,9 @@ namespace BoatRental.ef.Migrations
                 column: "OfferId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_reservations_User",
+                name: "IX_reservations_UserId",
                 table: "reservations",
-                column: "User");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServicePackage_packageId",

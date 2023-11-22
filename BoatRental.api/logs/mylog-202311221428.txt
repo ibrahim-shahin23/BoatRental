@@ -1,0 +1,137 @@
+2023-11-22 14:28:47.593 +02:00 [INF] Executed DbCommand (166ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [lastDB];
+2023-11-22 14:28:47.662 +02:00 [INF] Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [lastDB] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2023-11-22 14:28:55.732 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2023-11-22 14:28:55.780 +02:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2023-11-22 14:28:55.782 +02:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2023-11-22 14:28:55.793 +02:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2023-11-22 14:28:55.797 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2023-11-22 14:28:55.808 +02:00 [INF] Applying migration '20231122122537_db'.
+2023-11-22 14:28:55.850 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [categories] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_categories] PRIMARY KEY ([Id])
+);
+2023-11-22 14:28:55.854 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [services] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_services] PRIMARY KEY ([Id])
+);
+2023-11-22 14:28:55.856 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [users] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Email] nvarchar(max) NOT NULL,
+    [age] int NOT NULL,
+    [Discriminator] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_users] PRIMARY KEY ([Id])
+);
+2023-11-22 14:28:55.859 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [offers] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [OwnerId] int NOT NULL,
+    CONSTRAINT [PK_offers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_offers_users_OwnerId] FOREIGN KEY ([OwnerId]) REFERENCES [users] ([Id]) ON DELETE CASCADE
+);
+2023-11-22 14:28:55.861 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [reservations] (
+    [Id] int NOT NULL IDENTITY,
+    [Date] datetime2 NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_reservations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_reservations_users_UserId] FOREIGN KEY ([UserId]) REFERENCES [users] ([Id]) ON DELETE CASCADE
+);
+2023-11-22 14:28:55.862 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [packages] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [OfferId] int NULL,
+    CONSTRAINT [PK_packages] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_packages_offers_OfferId] FOREIGN KEY ([OfferId]) REFERENCES [offers] ([Id])
+);
+2023-11-22 14:28:55.865 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [vehicles] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(100) NOT NULL,
+    [Brand] nvarchar(max) NOT NULL,
+    [Year] datetime2 NOT NULL,
+    [Color] nvarchar(max) NOT NULL,
+    [CategoryId] int NOT NULL,
+    [ownerId] int NOT NULL,
+    [ReservationId] int NULL,
+    CONSTRAINT [PK_vehicles] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_vehicles_categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [categories] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_vehicles_reservations_ReservationId] FOREIGN KEY ([ReservationId]) REFERENCES [reservations] ([Id]),
+    CONSTRAINT [FK_vehicles_users_ownerId] FOREIGN KEY ([ownerId]) REFERENCES [users] ([Id]) ON DELETE CASCADE
+);
+2023-11-22 14:28:55.867 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ServicePackage] (
+    [serviceId] int NOT NULL,
+    [packageId] int NOT NULL,
+    CONSTRAINT [PK_ServicePackage] PRIMARY KEY ([serviceId], [packageId]),
+    CONSTRAINT [FK_ServicePackage_packages_packageId] FOREIGN KEY ([packageId]) REFERENCES [packages] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ServicePackage_services_serviceId] FOREIGN KEY ([serviceId]) REFERENCES [services] ([Id]) ON DELETE CASCADE
+);
+2023-11-22 14:28:55.869 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [staffs] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [VehicleId] int NOT NULL,
+    CONSTRAINT [PK_staffs] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_staffs_vehicles_VehicleId] FOREIGN KEY ([VehicleId]) REFERENCES [vehicles] ([Id]) ON DELETE CASCADE
+);
+2023-11-22 14:28:55.919 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [vehicleServices] (
+    [vechicleId] int NOT NULL,
+    [ServiceId] int NOT NULL,
+    [vehicleId] int NOT NULL,
+    [ServiceDate] datetime2 NOT NULL,
+    [Cost] float NOT NULL,
+    CONSTRAINT [PK_vehicleServices] PRIMARY KEY ([ServiceId], [vechicleId]),
+    CONSTRAINT [FK_vehicleServices_services_ServiceId] FOREIGN KEY ([ServiceId]) REFERENCES [services] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_vehicleServices_vehicles_vehicleId] FOREIGN KEY ([vehicleId]) REFERENCES [vehicles] ([Id]) ON DELETE CASCADE
+);
+2023-11-22 14:28:55.920 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_offers_OwnerId] ON [offers] ([OwnerId]);
+2023-11-22 14:28:55.921 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_packages_OfferId] ON [packages] ([OfferId]);
+2023-11-22 14:28:55.921 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_reservations_UserId] ON [reservations] ([UserId]);
+2023-11-22 14:28:55.922 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ServicePackage_packageId] ON [ServicePackage] ([packageId]);
+2023-11-22 14:28:55.922 +02:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_staffs_VehicleId] ON [staffs] ([VehicleId]);
+2023-11-22 14:28:55.923 +02:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_vehicles_CategoryId] ON [vehicles] ([CategoryId]);
+2023-11-22 14:28:55.923 +02:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_vehicles_ownerId] ON [vehicles] ([ownerId]);
+2023-11-22 14:28:55.924 +02:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_vehicles_ReservationId] ON [vehicles] ([ReservationId]);
+2023-11-22 14:28:55.925 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_vehicleServices_vehicleId] ON [vehicleServices] ([vehicleId]);
+2023-11-22 14:28:55.927 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20231122122537_db', N'7.0.14');

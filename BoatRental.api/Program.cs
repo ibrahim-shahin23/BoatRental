@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer("Data Source=ENG-IBRAHIM-SHA;Integrated Security=True;Database=newDB;Trusted_Connection=True;TrustServerCertificate=true"));
+    options.UseSqlServer("Data Source=ENG-IBRAHIM-SHA;Integrated Security=True;Database=lastDB;Trusted_Connection=True;TrustServerCertificate=true"));
 
 
 // Add services to the container.

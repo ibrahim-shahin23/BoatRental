@@ -11,6 +11,7 @@ namespace BoatRental.core.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+        public int age { get; set; }
+        public List<Reservation> reservations { get; set; }
     }
 }

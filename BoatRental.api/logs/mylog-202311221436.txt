@@ -1,0 +1,80 @@
+2023-11-22 14:36:16.881 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7282/api/Vehicle/addvehicle application/json 119
+2023-11-22 14:36:16.902 +02:00 [INF] Executing endpoint 'BoatRental.api.Controllers.VehicleController.AddVehicleAsync (BoatRental.api)'
+2023-11-22 14:36:16.923 +02:00 [INF] Route matched with {action = "AddVehicle", controller = "Vehicle"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddVehicleAsync(BoatRental.core.Dto.PostVehicleDto) on controller BoatRental.api.Controllers.VehicleController (BoatRental.api).
+2023-11-22 14:36:26.611 +02:00 [INF] Executed DbCommand (61ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (Size = 100), @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime2), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [vehicles] ([Brand], [CategoryId], [Color], [Name], [ReservationId], [Year], [ownerId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2023-11-22 14:36:26.704 +02:00 [ERR] An exception occurred in the database while saving changes for context type 'BoatRental.ef.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_vehicles_users_ownerId". The conflict occurred in database "lastDB", table "dbo.users", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.Read()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDataReader.Read()
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSet(Int32 startCommandIndex, RelationalDataReader reader)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.Consume(RelationalDataReader reader)
+ClientConnectionId:4bf5907e-0fe4-4a80-b0a2-bdb0a1eea78c
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.Consume(RelationalDataReader reader)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__107_0(DbContext _, ValueTuple`2 t)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_vehicles_users_ownerId". The conflict occurred in database "lastDB", table "dbo.users", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.Read()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDataReader.Read()
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSet(Int32 startCommandIndex, RelationalDataReader reader)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.Consume(RelationalDataReader reader)
+ClientConnectionId:4bf5907e-0fe4-4a80-b0a2-bdb0a1eea78c
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.Consume(RelationalDataReader reader)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.<>c.<SaveChanges>b__107_0(DbContext _, ValueTuple`2 t)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2023-11-22 14:36:26.802 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2023-11-22 14:36:26.808 +02:00 [INF] Executed action BoatRental.api.Controllers.VehicleController.AddVehicleAsync (BoatRental.api) in 9879.7908ms
+2023-11-22 14:36:26.810 +02:00 [INF] Executed endpoint 'BoatRental.api.Controllers.VehicleController.AddVehicleAsync (BoatRental.api)'
+2023-11-22 14:36:26.811 +02:00 [INF] HTTP POST /api/Vehicle/addvehicle responded 400 in 9911.4352 ms
+2023-11-22 14:36:26.816 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7282/api/Vehicle/addvehicle application/json 119 - 400 - text/plain;+charset=utf-8 9935.5764ms
+2023-11-22 14:36:41.707 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7282/api/Vehicle/GetAllVehicles - -
+2023-11-22 14:36:41.709 +02:00 [INF] Executing endpoint 'BoatRental.api.Controllers.VehicleController.GetAllVehicles (BoatRental.api)'
+2023-11-22 14:36:41.713 +02:00 [INF] Route matched with {action = "GetAllVehicles", controller = "Vehicle"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllVehicles() on controller BoatRental.api.Controllers.VehicleController (BoatRental.api).
+2023-11-22 14:36:42.035 +02:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[Id], [v].[Brand], [v].[CategoryId], [v].[Color], [v].[Name], [v].[ReservationId], [v].[Year], [v].[ownerId], [c].[Id], [c].[Description], [c].[Name]
+FROM [vehicles] AS [v]
+INNER JOIN [categories] AS [c] ON [v].[CategoryId] = [c].[Id]
+2023-11-22 14:36:42.048 +02:00 [INF] our vehicles => []
+2023-11-22 14:36:42.055 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[BoatRental.core.Dto.VehicleDto, BoatRental.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-11-22 14:36:42.058 +02:00 [INF] Executed action BoatRental.api.Controllers.VehicleController.GetAllVehicles (BoatRental.api) in 342.9711ms
+2023-11-22 14:36:42.059 +02:00 [INF] Executed endpoint 'BoatRental.api.Controllers.VehicleController.GetAllVehicles (BoatRental.api)'
+2023-11-22 14:36:42.061 +02:00 [INF] HTTP GET /api/Vehicle/GetAllVehicles responded 200 in 351.6262 ms
+2023-11-22 14:36:42.062 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7282/api/Vehicle/GetAllVehicles - - - 200 - application/json;+charset=utf-8 355.9490ms

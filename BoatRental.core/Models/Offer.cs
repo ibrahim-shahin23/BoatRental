@@ -14,6 +14,9 @@ namespace BoatRental.core.Models
         public string Description { get; set; }
         public List<Package> Packages { get; set; }
 
+        public Owner owner { get; set; }
+        [ForeignKey(nameof(Owner))]
+        public int OwnerId { get; set; }
         
     }
 }
